@@ -7,21 +7,59 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
-
 import java.io.IOException;
+
+import org.asynchttpclient.AsyncHttpClient;
+import org.asynchttpclient.Dsl;
+import org.asynchttpclient.Response;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 public class App {
     public String getGreeting() {
         return "Hello World!";
     }
 
+    public void performAsyncHttpRequest(String url) {
+        // Create an AsyncHttpClient instance
+        AsyncHttpClient asyncHttpClient = Dsl.asyncHttpClient();
+
+        // Send an asynchronous GET request
+        CompletableFuture < Response > futureResponse = asyncHttpClient
+            .prepareGet(url)
+            .execute()
+            .toCompletableFuture();
+
+        // Process the response when it completes
+        futureResponse.thenAccept(response -> {
+            // Get the response status code and body
+            int statusCode = response.getStatusCode();
+            String responseBody = response.getResponseBody();
+
+            System.out.println("Response Status Code: " + statusCode);
+            System.out.println("Response Body: " + responseBody);
+
+            // Close the AsyncHttpClient
+            try {
+                asyncHttpClient.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        // Wait for the response to complete (optional)
+        try {
+            futureResponse.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) {
+
+        App app = new App();
+        app.performAsyncHttpRequest("https://6242f044d126926d0c59a15f.mockapi.io/userprofile");
 
         // Create a DateTime object representing the current date and time
         DateTime now = DateTime.now();
@@ -35,33 +73,5 @@ public class App {
 
         System.out.println(new App().getGreeting());
 
-        // Create an HttpClient instance
-        CloseableHttpClient httpClient = HttpClients.createDefault();
-
-        // Create an HttpGet request with the URL you want to fetch
-        HttpGet httpGet = new HttpGet("https://6242f044d126926d0c59a15f.mockapi.io/userprofile");
-
-        try {
-            // Execute the request and get the response
-            HttpResponse response = httpClient.execute(httpGet);
-
-            // Get the response entity
-            HttpEntity entity = response.getEntity();
-
-            if (entity != null) {
-                // Convert the response entity to a string
-                String responseBody = EntityUtils.toString(entity);
-                System.out.println("Response body: " + responseBody);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                // Close the HttpClient instance
-                httpClient.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 }
