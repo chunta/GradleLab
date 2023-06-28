@@ -16,6 +16,15 @@ import org.asynchttpclient.Response;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+@SpringBootApplication
 public class App {
     public String getGreeting() {
         return "Hello World!";
@@ -72,6 +81,8 @@ public class App {
         System.out.println("Current date and time: " + formattedDateTime);
 
         System.out.println(new App().getGreeting());
+
+        SpringApplication.run(App.class, args);
 
     }
 }
