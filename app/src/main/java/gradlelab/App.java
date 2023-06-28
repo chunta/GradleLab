@@ -7,6 +7,15 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
+
+import java.io.IOException;
+
 public class App {
     public String getGreeting() {
         return "Hello World!";
@@ -25,5 +34,34 @@ public class App {
         System.out.println("Current date and time: " + formattedDateTime);
 
         System.out.println(new App().getGreeting());
+
+        // Create an HttpClient instance
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+
+        // Create an HttpGet request with the URL you want to fetch
+        HttpGet httpGet = new HttpGet("https://6242f044d126926d0c59a15f.mockapi.io/userprofile");
+
+        try {
+            // Execute the request and get the response
+            HttpResponse response = httpClient.execute(httpGet);
+
+            // Get the response entity
+            HttpEntity entity = response.getEntity();
+
+            if (entity != null) {
+                // Convert the response entity to a string
+                String responseBody = EntityUtils.toString(entity);
+                System.out.println("Response body: " + responseBody);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                // Close the HttpClient instance
+                httpClient.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
