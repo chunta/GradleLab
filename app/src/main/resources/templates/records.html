@@ -13,12 +13,21 @@
       padding: 8px;
     }
 
+    .over-18 {
+      color: red;
+    }
+
     tr:nth-child(odd) {
       background-color: lightgray;
     }
   </style>
 </head>
 <body>
+<!-- Check if error message exists and display it -->
+<div th:if="${errorMessage}" style="color: red; font-weight: bold;">
+  Error: <span th:text="${errorMessage}"></span>
+</div>
+
 <table>
   <thead>
   <tr>
@@ -31,7 +40,7 @@
   <!-- Iterate over the records and display each one -->
   <tr th:each="record, rowStatus : ${records}" th:class="${rowStatus.odd}? 'odd'">
     <td th:text="${record.name}"></td>
-    <td th:text="${record.age}"></td>
+    <td th:class="${record.age < 20}? 'over-18' : ''" th:text="${record.age}"></td>
     <td th:text="${record.email}"></td>
   </tr>
   </tbody>

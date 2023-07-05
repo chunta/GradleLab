@@ -28,6 +28,7 @@ dependencies {
     // Additional libraries
     implementation 'joda-time:joda-time:2.10.12'
     implementation 'org.asynchttpclient:async-http-client:3.0.0.Beta2'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.10.1'
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
