@@ -34,6 +34,9 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.freemarker:freemarker:2.3.31'
+    implementation 'com.sun.mail:javax.mail:1.6.2'
+
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
