@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo Introduction</title>
+</head>
+<body>
+01234567
+<h1>Hello, <span th:text="${name}"></span>!</h1>
+
+<div th:if="${showMessage}">
+    <p>This is a conditional message that will only be shown if showMessage is true.</p>
+</div>
+
+<div th:unless="${showMessage}">
+    <p>This is a message that will be shown if showMessage is false.</p>
+</div>
+
+<ul>
+    <li th:each="number : ${numbers}" th:text="${number}"></li>
+</ul>
+
+</body>
+</html>
