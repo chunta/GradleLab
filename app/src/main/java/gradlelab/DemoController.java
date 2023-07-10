@@ -9,14 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.URI;
 import java.net.URL;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,20 +68,6 @@ public class DemoController {
             System.out.println(e.getLocalizedMessage());
         }
         return modelAndView;
-    }
-
-    @GetMapping("/get_records")
-    public String getRecords() throws IOException, InterruptedException {
-
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://127.0.0.1:8080/remote_records"))
-                .GET()
-                .build();
-        HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        System.out.println(response.body());
-        System.out.println("===============");
-        return "Records";
     }
 
     @GetMapping("/records")
