@@ -2,21 +2,22 @@ package gradlelab;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.ui.Model;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -48,9 +49,9 @@ public class DemoController {
 
                 // Convert response string to JSON objects
                 ObjectMapper objectMapper = new ObjectMapper();
-                List<Record> records = objectMapper.readValue(response.toString(), new TypeReference<List<Record>>() {});
+                List<Record> records = objectMapper.readValue(response.toString(), new TypeReference<List<Record>>() {
+                });
                 System.out.println(records);
-
                 modelAndView.addObject("records", records);
 
                 return modelAndView;
@@ -71,8 +72,21 @@ public class DemoController {
             // Handle exception
             System.out.println(e.getLocalizedMessage());
         }
-
         return modelAndView;
+    }
+
+    @GetMapping("/get_records")
+    public String getRecords() throws IOException, InterruptedException {
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://127.0.0.1:8080/remote_records"))
+                .GET()
+                .build();
+        HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+        System.out.println("===============");
+        return "Records";
     }
 
     @GetMapping("/records")
