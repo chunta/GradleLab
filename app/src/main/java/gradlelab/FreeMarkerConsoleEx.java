@@ -22,8 +22,10 @@ import java.util.*;
 
 @Component
 public class FreeMarkerConsoleEx {
-    @Scheduled(fixedRate = 5000) // Executes every 5 seconds
-    public void performScheduledTask02() throws IOException, TemplateException {
+
+    // @Scheduled(cron = "0 50 9 ? * TUE", zone = "Asia/Taipei")
+    @Scheduled(cron = "*/5 * * * * *")
+    public void performScheduledTask() throws IOException, TemplateException {
         // Configuration for FreeMarker template engine
         Configuration cfg = configureTemplateEngine();
 
@@ -108,7 +110,7 @@ public class FreeMarkerConsoleEx {
         System.out.println(htmlBody);
 
         final String senderEmail = "hi.chuntachen@gmail.com";
-        final String password = "iullnefuekuqnguj";
+        final String password = "mvdzjajdkmzsyeve";
         List<String> recipientEmails = Arrays.asList("uck729@gmail.com",
                 "chunta.chen@lookout.com");
 
