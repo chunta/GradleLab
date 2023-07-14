@@ -1,7 +1,8 @@
 package gradlelab;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.mapstruct.Mapper;
+
 
 public class Record {
     private String name;

@@ -22,6 +22,15 @@ dependencies {
     // Use JUnit test framework.
     testImplementation 'junit:junit:4.13.2'
 
+    // aws db
+    implementation platform('software.amazon.awssdk:bom:2.18.0')
+    implementation 'software.amazon.awssdk:sts'
+    implementation 'software.amazon.awssdk:s3'
+    implementation 'software.amazon.awssdk:ec2'
+    implementation 'software.amazon.awssdk:ecs'
+    implementation 'software.amazon.awssdk:eks'
+    implementation 'software.amazon.awssdk:dynamodb-enhanced'
+
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:31.1-jre'
 
@@ -37,6 +46,15 @@ dependencies {
     implementation 'org.freemarker:freemarker:2.3.31'
     implementation 'com.sun.mail:javax.mail:1.6.2'
 
+    // Map struct
+    implementation 'org.mapstruct:mapstruct:1.5.3.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
+
+    // Lombok
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+    testCompileOnly 'org.projectlombok:lombok:1.18.24'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
 }
 
 // Apply a specific Java toolchain to ease working on different environments.

@@ -23,6 +23,7 @@ public class DemoController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("records");
 
+        //
         String apiUrl = "https://6242f044d126926d0c59a15f.mockapi.io/userprofile";
         try {
             URL url = new URL(apiUrl);

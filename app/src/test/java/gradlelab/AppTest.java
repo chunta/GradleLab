@@ -3,12 +3,26 @@
  */
 package gradlelab;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 public class AppTest {
     @Test public void appHasAGreeting() {
         App classUnderTest = new App();
+
+        PersonDto dto = new PersonDto("firstName", "lastName", 11);
+
+        Person person = new Person("first", "last name", 11);
+
+        PersonMapper map = new PersonMapperImpl();
+
+        PersonDto cdt = map.toDto(person);
+
+        assertEquals(cdt.getLastName(), person.getLastName());
+        assertEquals(cdt.getFirstName(), person.getFirstName());
+
         assertNotNull("app should have a greeting", classUnderTest.getGreeting());
     }
 }
